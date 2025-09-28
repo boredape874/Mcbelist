@@ -9,8 +9,8 @@
 const serverData = {
     // A. 사이트 전체 설정 (텍스트, 타이틀, 속도 등)
     siteConfig: {
-        siteTitle: '마인크래프트 커뮤니티 서버 통합 리스트',
-        siteDescription: '마크 커뮤니티 정보를 빠르게 확인하세요.',
+        siteTitle: '마인크래프트 커뮤니티 서버 리스트',
+        siteDescription: '최신 마인크래프트 커뮤니티 소식을 빠르게 확인하세요.',
         topBannerTitle: '🏆 최고의 서버 배너', // NEW: 최고의 서버 섹션 제목
         mainBannerTitle: '오늘의 추천 서버', // 오늘의 추천 서버 섹션 제목
         filterTitleCategory: '서버 종류별 분류',
@@ -23,16 +23,16 @@ const serverData = {
     // B. 필터 종류 설정 (카테고리 및 태그)
     config: {
         // 서버 카테고리(서버 종류)를 추가/삭제/수정할 수 있습니다.
-        categories: [ '국가전쟁', '야생/RPG', '미니게임', '건축/크리에이티브', '자유 주제' ],
+        categories: [ '야생/RPG', '미니게임', '건축/크리에이티브', '자유 주제' ],
         // 태그를 추가/삭제/수정할 수 있습니다.
         tags: [ '인기', '신규', '이벤트', '개발 중' ]
     },
 
     // C. 최고의 서버 배너 데이터 (최상단 고정/순환 배너)
     topBanners: [
-        { id: 'top_001', title: '🔥베드락 최대규모 국가전쟁🔥!!', subtitle: '지금 바로 접속하여 특별한 혜택을 받으세요!', 
+        { id: 'top_001', title: '💎 최고의 서버 랭킹 1위! (클릭 가능)', subtitle: '지금 바로 접속하여 특별한 혜택을 받으세요!', 
           image: 'images/제목을-입력해주세요_-001(27).png', // <--- 로컬 이미지 경로로 변경됨
-          url: 'https://open.kakao.com/o/gRUC0Reh, 
+          url: 'https://open.kakao.com/o/gRUC0Reh', 
           content: '최고의 서버 랭킹 1위! 가장 많은 유저가 찾는 서버입니다. 상세 광고를 보려면 클릭하세요.' },
         { id: 'top_002', title: '🚀 프리미엄 서버 독점 공개!', subtitle: '특별한 혜택을 놓치지 마세요!', 
           image: 'images/banner_top_02.png', // <--- 로컬 이미지 경로로 변경됨
