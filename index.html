@@ -17,14 +17,19 @@
         /* Nanum Square Round 폰트 임포트 (네오 둥근모 폰트 적용) */
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
 
-        /* 폰트 및 기본 스타일 */
+        /* 폰트 및 기본 스타일: 배경색을 밝은 톤으로 유지 */
         body { 
             font-family: 'Nanum Square Round', 'Inter', sans-serif; /* 네오 둥근모 폰트 적용 */
-            background-color: #f0f3f8; /* Toss/Kakao light background */ 
+            background-color: #f0f3f8; 
+            margin: 0; /* body 기본 마진 제거 */
+            padding: 0;
         }
         
-        /* 메인 컨테이너에 깔끔한 둥근 모서리 적용 */
-        #app { border-radius: 1rem; } /* rounded-xl */
+        /* 메인 컨테이너: 최대 너비 없이 화면 꽉 채움 */
+        #app {
+            background-color: #ffffff; /* 흰색 배경 */
+            min-height: 100vh;
+        } 
         
         /* 햄버거 메뉴 버튼 고정 */
         #menu-btn {
@@ -34,19 +39,19 @@
             z-index: 70; 
         }
 
-        /* 커뮤니티 버튼 스타일링 (카카오톡/친근한 아이콘 스타일) */
+        /* 커뮤니티 버튼 스타일링 */
         .community-btn {
             @apply flex items-center justify-center p-2 text-sm font-medium transition duration-150 ease-in-out border border-gray-300 rounded-lg hover:bg-gray-100;
         }
 
         /* 필터 버튼 기본 스타일 */
         .filter-btn-base {
-            @apply px-3 py-1 text-xs font-medium shadow-sm transition duration-150 whitespace-nowrap border rounded-lg; /* 덜 둥근 모서리 유지 */
+            @apply px-3 py-1 text-xs font-medium transition duration-150 whitespace-nowrap border rounded-lg;
         }
-        
+
         /* 슬라이드 배너 트랙을 위한 CSS 설정 */
         .slider-track {
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 부드러운 슬라이드 전환 효과 */
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             display: flex;
             height: 100%;
         }
@@ -65,6 +70,12 @@
             z-index: 59;
             background-color: rgba(0, 0, 0, 0.4);
         }
+        
+        /* 서버 카드 스타일: 여백 최소화 */
+        .server-card {
+            /* 모바일에서만 카드별 여백을 줘서 구분 */
+            @apply mb-4 sm:mb-0; 
+        }
     </style>
     
     <!-- Tailwind Custom Configuration (부드러운 블루 톤 유지) -->
@@ -73,15 +84,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#5F82FF',       /* Light Blue Accent (Toss Blue) */
-                        'primary-light': '#E8F0FF', /* Very light blue background */
-                        'primary-dark': '#3D5ECF',  /* Darker for hover/accents */
-                        'secondary': '#F59E0B',     /* 보조 강조색 */
-                        'reddit-vote': '#FF4500',   /* Reddit Upvote Orange (for member count) */
+                        'primary': '#5F82FF',       
+                        'primary-light': '#E8F0FF', 
+                        'primary-dark': '#3D5ECF',  
+                        'secondary': '#F59E0B',     
+                        'reddit-vote': '#FF4500',   
                     },
                     borderRadius: {
                         'lg': '0.5rem', 
-                        'xl': '1rem' /* 큰 카드에 적용, 덜 둥근 느낌 */
+                        'xl': '0.75rem' /* 기존 1rem -> 0.75rem으로 살짝 축소 */
                     }
                 }
             }
@@ -90,11 +101,11 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- 메인 컨테이너 (깔끔한 Toss 스타일의 카드 컨테이너) -->
-    <div id="app" class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white shadow-2xl min-h-screen rounded-xl">
+    <!-- 메인 컨테이너 (화면 꽉 채움) -->
+    <div id="app" class="min-h-screen bg-white">
 
-        <!-- 헤더 및 제목 -->
-        <header class="text-center mb-6 relative pt-12 sm:pt-16"> 
+        <!-- 헤더 및 제목 (내부에만 패딩 적용) -->
+        <header class="text-center pb-4 relative pt-12 sm:pt-16 px-4"> 
             
             <!-- 왼쪽 상단 햄버거 메뉴 버튼 (고정/Fixed) -->
             <button onclick="toggleDrawer()" id="menu-btn" 
@@ -103,51 +114,49 @@
             </button>
             
             <h1 id="site-title-h1" class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">Loading...</h1>
-            <p id="site-description-p" class="mt-2 text-md text-gray-500">Loading...</p>
+            <p id="site-description-p" class="mt-1 text-md text-gray-500">Loading...</p>
         </header>
 
-        <!-- 서버 검색 입력 필드 (Toss 스타일, 깔끔한 인풋) -->
-        <div class="mb-6">
+        <!-- 서버 검색 입력 필드 (내부에만 패딩 적용) -->
+        <div class="mb-4 px-4">
             <input type="text" id="server-search-input" onkeyup="handleSearch(event)"
                    placeholder="서버 이름, 내용, 카테고리, 태그 등으로 검색..."
                    class="w-full p-4 border-2 border-gray-200 focus:border-primary focus:ring-primary transition rounded-xl text-gray-800 shadow-md">
         </div>
 
-        <!-- 최고의 서버 배너 영역 (Top Banner - SLIDER) -->
-        <div class="mb-6 shadow-xl overflow-hidden bg-primary-light border border-gray-200 rounded-xl">
-            <div class="p-4 bg-primary text-white rounded-t-xl flex justify-between items-center">
-                <h2 id="top-banner-title-h2" class="text-md font-bold text-center"></h2>
-                <span class="text-xs font-light opacity-90">Ads</span>
+        <!-- 1. 최고의 서버 배너 영역 (Top Banner - SLIDER): 꽉 채움 -->
+        <!-- 배경색 및 그림자로 구분을 명확히 함 -->
+        <div class="mb-4 shadow-inner overflow-hidden bg-primary-light border-y border-gray-200">
+            <div class="px-4 py-2 bg-primary text-white flex justify-between items-center">
+                <h2 id="top-banner-title-h2" class="text-md font-bold"></h2>
+                <span class="text-xs font-light opacity-90">광고</span>
             </div>
-            <div id="top-banner-content" class="w-full h-24 sm:h-32 relative overflow-hidden flex items-center justify-center text-center rounded-b-xl">
-                <!-- Banner track will be inserted here by list.js -->
+            <div id="top-banner-content" class="w-full h-24 sm:h-32 relative overflow-hidden flex items-center justify-center text-center">
                 <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">최고의 서버 로딩 중...</div>
             </div>
         </div>
 
-        <!-- 오늘의 추천 서버 배너 영역 (Main Banner - SLIDER) -->
-        <div class="mb-8 shadow-2xl overflow-hidden bg-white border border-gray-100 rounded-xl">
-             <div class="p-4 bg-primary-light text-gray-800 rounded-t-xl flex justify-between items-center">
+        <!-- 2. 오늘의 추천 서버 배너 영역 (Main Banner - SLIDER): 꽉 채움 -->
+        <div class="mb-6 overflow-hidden bg-white">
+             <div class="px-4 py-3 bg-primary-light text-gray-800 flex justify-between items-center">
                 <h2 id="main-banner-title-h2" class="text-lg font-bold"></h2>
                 <span class="text-xs font-semibold text-primary">자동 슬라이드</span>
             </div>
-            <div id="main-banner-content" class="w-full h-40 sm:h-48 relative overflow-hidden flex items-center justify-center text-center rounded-b-xl">
-                <!-- Banner track will be inserted here by list.js -->
+            <div id="main-banner-content" class="w-full h-36 sm:h-44 relative overflow-hidden flex items-center justify-center text-center">
                 <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">배너 로딩 중...</div>
             </div>
         </div>
         
-        <!-- 서버 목록 영역 (Reddit Feed Layout) -->
-        <main id="server-list" class="grid grid-cols-1 gap-6 pb-10"></main>
+        <!-- 서버 목록 영역 (통이미지 카드 Layout - 좌우 패딩만 유지) -->
+        <!-- 모바일에서는 1열, 태블릿 이상에서는 2열로 표시, 좌우 패딩을 줘서 카드 자체가 꽉 차게 만듦 -->
+        <main id="server-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 pb-10"></main>
 
         <!-- 목록이 비어 있을 때 메시지 -->
-        <div id="no-results" class="hidden text-center py-12 bg-gray-50 border border-gray-200 shadow-lg rounded-xl">
+        <div id="no-results" class="hidden text-center mx-4 py-12 bg-gray-50 border border-gray-200 shadow-lg rounded-xl">
             <p id="no-results-message" class="text-xl text-primary-dark font-semibold"></p>
             <button onclick="resetFilters()" id="reset-button" class="mt-6 px-6 py-2 bg-primary text-white shadow-xl hover:bg-primary-dark transition rounded-lg font-bold"></button>
         </div>
         
-        <!-- (광고 및 배너 문의 버튼은 이제 드로어 내부로 이동했습니다.) -->
-
     </div>
 
     <!-- 필터 드로어 (Filter Drawer) - 왼쪽 상단 메뉴 -->
@@ -164,7 +173,7 @@
             <h3 id="filter-tag-h3" class="text-sm font-bold mb-3 text-gray-800"></h3>
             <div id="tag-filter" class="flex flex-wrap gap-2 mb-8"></div>
             
-            <!-- ✅ 요청하신 광고 및 배너 문의 버튼 (드로어 맨 아래 추가) -->
+            <!-- 광고 및 배너 문의 버튼 (드로어 맨 아래 유지) -->
             <div class="mb-6 border-t pt-4 border-gray-100">
                 <a href="https://open.kakao.com/me/Godbored" target="_blank"
                    class="flex items-center justify-center w-full py-3 bg-secondary text-white font-bold text-sm rounded-lg shadow-md hover:bg-secondary/80 transition duration-200">
@@ -191,7 +200,7 @@
                 <button onclick="hideAdDetail()" class="text-white hover:text-gray-200 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
-            </div>
+            </button>
             <div class="p-4 sm:p-6 text-center">
                 <img id="modal-ad-image" alt="광고 이미지" class="w-full h-auto object-cover border border-gray-300 mb-4 rounded-lg">
                 <p id="modal-ad-content" class="text-base text-gray-700 mb-6"></p>
@@ -205,8 +214,8 @@
         </div>
     </div>
 
-    <!-- ⚠️ list.js가 수정될 때마다 아래 'v=' 뒤의 값을 변경해야 합니다. 버전 번호 변경: 20240929_3 -->
-    <script src="./list.js?v=20240929_1"></script> 
+    <!-- ⚠️ list.js 버전 번호 변경: 20240929_7 (변경 시마다 수정) -->
+    <script src="./list.js?v=20240929_7"></script> 
 </body>
 </html>
 
