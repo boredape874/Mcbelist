@@ -1,6 +1,7 @@
 // list.js
 // =========================================================================
 // 마인크래프트 서버 리스트 앱의 핵심 로직과 모든 데이터를 관리하는 파일입니다.
+// 모든 이미지 경로는 './images/' 폴더를 기준으로 설정되었습니다.
 // =========================================================================
 
 // --- 1. 전역 데이터 및 설정 영역 ---
@@ -9,7 +10,7 @@ const serverData = {
     // A. 사이트 전체 설정 (텍스트, 타이틀, 속도 등)
     siteConfig: {
         siteTitle: '마인크래프트 커뮤니티 서버 통합 리스트',
-        siteDescription: '각진 모던 UI와 고정 메뉴로 더 많은 정보를 빠르게 확인하세요.',
+        siteDescription: '마크 커뮤니티 정보를 빠르게 확인하세요.',
         topBannerTitle: '🏆 최고의 서버 배너', // NEW: 최고의 서버 섹션 제목
         mainBannerTitle: '오늘의 추천 서버', // 오늘의 추천 서버 섹션 제목
         filterTitleCategory: '서버 종류별 분류',
@@ -30,11 +31,11 @@ const serverData = {
     // C. 최고의 서버 배너 데이터 (최상단 고정/순환 배너)
     topBanners: [
         { id: 'top_001', title: '💎 최고의 서버 랭킹 1위! (클릭 가능)', subtitle: '지금 바로 접속하여 특별한 혜택을 받으세요!', 
-          image: 'https://placehold.co/1200x150/9333ea/ffffff?text=TOP+SERVER+BANNER+1', 
+          image: 'images/banner_top_01.png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://example.com/top-server-ad-1', 
           content: '최고의 서버 랭킹 1위! 가장 많은 유저가 찾는 서버입니다. 상세 광고를 보려면 클릭하세요.' },
         { id: 'top_002', title: '🚀 프리미엄 서버 독점 공개!', subtitle: '특별한 혜택을 놓치지 마세요!', 
-          image: 'https://placehold.co/1200x150/059669/ffffff?text=TOP+SERVER+BANNER+2', 
+          image: 'images/banner_top_02.png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://example.com/top-server-ad-2', 
           content: '새로운 서버가 최고의 서버 배너에 등록되었습니다! 론칭 이벤트 참여 기회를 잡으세요.' }
     ],
@@ -42,11 +43,11 @@ const serverData = {
     // D. 오늘의 추천 서버 배너 데이터 (메인 로테이션 배너)
     mainBanners: [
         { id: 'main_001', title: '✨ 주간 인기 서버 랭킹 1위!', subtitle: '3초마다 자동으로 교체됩니다.', 
-          image: 'https://placehold.co/1200x300/1D4ED8/ffffff?text=Main+Banner+1', 
+          image: 'images/banner_main_01.gif', // <--- 로컬 이미지 경로로 변경됨 (GIF도 가능)
           url: 'https://example.com/weekly-event', 
           content: '주간 인기 서버 랭킹 1위! 상세 내용 확인 및 접속은 여기에서!' },
         { id: 'main_002', title: '🎁 신규 유저 특별 지원!', subtitle: '모던하고 각진 디자인으로 한눈에 서버 정보를 확인하세요.', 
-          image: 'https://placehold.co/1200x300/F59E0B/ffffff?text=Main+Banner+2', 
+          image: 'images/banner_main_02.png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://example.com/new-user-guide', 
           content: '신규 유저를 위한 웰컴 패키지가 준비되어 있습니다. 지금 바로 확인하세요.' }
     ],
@@ -55,21 +56,29 @@ const serverData = {
     inlineAds: [
         { id: 'ad_001', title: '프리미엄 서버 호스팅! 20% 할인 이벤트!', 
           content: '렉 없는 환경을 원한다면 지금 바로 호스팅 서비스 확인하세요! 최고의 안정성과 속도를 보장합니다.', 
-          image: 'https://placehold.co/800x200/DC2626/ffffff?text=ADVERTISEMENT', 
+          image: 'images/ad_hosting.png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://example.com/hosting-ad' },
         { id: 'ad_002', title: '새로운 마인크래프트 런처 출시!', 
           content: '더욱 편리해진 기능과 UI를 경험해보세요. 원클릭 설치, 자동 업데이트, 사용자 정의 테마 지원!', 
-          image: 'https://placehold.co/800x200/059669/ffffff?text=LAUNCHER+AD', 
+          image: 'images/ad_launcher.png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://example.com/launcher-ad' }
     ],
 
     // F. 실제 서버 목록 데이터 (가장 중요)
     // 각 서버의 정보를 수정/추가/삭제할 수 있습니다.
     servers: [
-        { id: 'mc_001', title: '전설의 마인크래프트 왕국', content: 'GIF 지원 확인! 오래된 역사와 안정적인 운영을 자랑하는 대규모 야생 서버입니다.', category: '야생/RPG', tags: ['인기', '신규'], memberCount: 1500, image: 'https://placehold.co/400x130/000000/ffffff?text=Server+1', communities: [{ type: 'Discord', url: 'https://discord.gg/example-legend' }, { type: 'Web', url: 'http://legend.server.com' }] },
-        { id: 'mc_002', title: '미니게임즈 천국', content: '다양하고 신나는 PVP 미니게임들을 24시간 즐겨보세요! 가볍게 즐기기 최고!', category: '미니게임', tags: ['이벤트'], memberCount: 450, image: 'https://placehold.co/400x130/3B82F6/ffffff?text=Server+2', communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-mini' }] },
-        { id: 'mc_003', title: '판타지 건축 프로젝트', content: '창의적인 건축가들을 위한 서버입니다. 각진 디자인에 맞게 모든 UI를 깔끔하게 정리했습니다.', category: '건축/크리에이티브', tags: ['신규', '개발 중'], memberCount: 92, image: 'https://placehold.co/400x130/9CA3AF/ffffff?text=Server+3', communities: [{ type: 'Discord', url: 'https://discord.gg/example-build' }, { type: 'Kakao', url: 'https://open.kakao.com/o/example-build-chat' }] },
-        { id: 'mc_004', title: '자유 소통 광장', content: '마인크래프트에 관련된 모든 주제로 자유롭게 소통하는 오픈 채팅방입니다. 부담없이 들어오세요!', category: '자유 주제', tags: ['신규'], memberCount: 220, image: 'https://placehold.co/400x130/059669/ffffff?text=Server+4', communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-free' }] },
+        { id: 'mc_001', title: '전설의 마인크래프트 왕국', content: 'GIF 지원 확인! 오래된 역사와 안정적인 운영을 자랑하는 대규모 야생 서버입니다.', category: '야생/RPG', tags: ['인기', '신규'], memberCount: 1500, 
+          image: 'images/server_mc_001.jpg', // <--- 로컬 이미지 경로로 변경됨
+          communities: [{ type: 'Discord', url: 'https://discord.gg/example-legend' }, { type: 'Web', url: 'http://legend.server.com' }] },
+        { id: 'mc_002', title: '미니게임즈 천국', content: '다양하고 신나는 PVP 미니게임들을 24시간 즐겨보세요! 가볍게 즐기기 최고!', category: '미니게임', tags: ['이벤트'], memberCount: 450, 
+          image: 'images/server_mc_002.jpg', // <--- 로컬 이미지 경로로 변경됨
+          communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-mini' }] },
+        { id: 'mc_003', title: '판타지 건축 프로젝트', content: '창의적인 건축가들을 위한 서버입니다. 각진 디자인에 맞게 모든 UI를 깔끔하게 정리했습니다.', category: '건축/크리에이티브', tags: ['신규', '개발 중'], memberCount: 92, 
+          image: 'images/server_mc_003.png', // <--- 로컬 이미지 경로로 변경됨
+          communities: [{ type: 'Discord', url: 'https://discord.gg/example-build' }, { type: 'Kakao', url: 'https://open.kakao.com/o/example-build-chat' }] },
+        { id: 'mc_004', title: '자유 소통 광장', content: '마인크래프트에 관련된 모든 주제로 자유롭게 소통하는 오픈 채팅방입니다. 부담없이 들어오세요!', category: '자유 주제', tags: ['신규'], memberCount: 220, 
+          image: 'images/server_mc_004.png', // <--- 로컬 이미지 경로로 변경됨
+          communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-free' }] },
         // 서버를 더 추가하려면 여기에 { ... }, 형태로 복사/붙여넣기 하세요.
     ]
 };
@@ -209,9 +218,10 @@ function showAdDetail(itemId) {
     const adImage = document.getElementById('modal-ad-image');
     adImage.src = item.image;
     
-    // 이미지 로드 실패 시 플레이스홀더를 표시합니다.
+    // 이미지 로드 실패 시 플레이스홀더를 표시합니다. (로컬 파일 없을 때 대비)
+    const placeholderText = item.title.replace(/ /g, '+');
     const placeholderColor = item.isTop ? '9333ea' : (item.isBanner ? '1D4ED8' : 'DC2626');
-    adImage.onerror = () => { adImage.src = `https://placehold.co/800x200/${placeholderColor}/ffffff?text=${item.title.replace(/ /g, '+')}`; };
+    adImage.onerror = () => { adImage.src = `https://placehold.co/800x200/${placeholderColor}/ffffff?text=Image+Load+Fail:+${placeholderText}`; };
 
     document.getElementById('modal-ad-link').href = item.url;
     
@@ -236,11 +246,16 @@ window.hideAdDetail = hideAdDetail; // index.html에서 호출 가능하도록 �
 function renderTopBanner(index) {
     const banner = serverData.topBanners[index];
     if (!banner) return;
+    
+    // 이미지 로드 실패 시 플레이스홀더를 표시합니다. (로컬 파일 없을 때 대비)
+    const placeholderText = banner.title.replace(/ /g, '+');
+    const placeholderColor = '9333ea';
+
     const bannerHtml = `
         <div onclick="showAdDetail('${banner.id}')" 
              class="block w-full h-full relative banner-transition opacity-100 cursor-pointer active:scale-[0.99] rounded-none">
             <img src="${banner.image}" 
-                 onerror="this.onerror=null;this.src='https://placehold.co/1200x150/9333ea/ffffff?text=${banner.title.replace(/ /g, '+')}';" 
+                 onerror="this.onerror=null;this.src='https://placehold.co/1200x150/${placeholderColor}/ffffff?text=Image+Load+Fail:+${placeholderText}';" 
                  alt="${banner.title} 배너 이미지" 
                  class="w-full h-full object-cover absolute inset-0 rounded-none">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white p-2">
@@ -275,10 +290,15 @@ function startTopBannerRotation() {
 function renderMainBanner(index) {
     const banner = serverData.mainBanners[index];
     if (!banner) return;
+
+    // 이미지 로드 실패 시 플레이스홀더를 표시합니다. (로컬 파일 없을 때 대비)
+    const placeholderText = banner.title.replace(/ /g, '+');
+    const placeholderColor = '1D4ED8';
+
     const bannerHtml = `
         <div onclick="showAdDetail('${banner.id}')" class="block w-full h-full relative banner-transition opacity-100 cursor-pointer active:scale-[0.99] rounded-none">
             <img src="${banner.image}" 
-                 onerror="this.onerror=null;this.src='https://placehold.co/1200x300/1D4ED8/ffffff?text=${banner.title.replace(/ /g, '+')}';" 
+                 onerror="this.onerror=null;this.src='https://placehold.co/1200x300/${placeholderColor}/ffffff?text=Image+Load+Fail:+${placeholderText}';" 
                  alt="${banner.title} 배너 이미지 (GIF 지원)" 
                  class="w-full h-full object-cover absolute inset-0 rounded-none">
             <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white p-4">
@@ -313,12 +333,15 @@ function startMainBannerRotation() {
 
 /** 인라인 광고 배너 HTML을 생성합니다. */
 function createInlineAdHtml(ad) {
+    // 이미지 로드 실패 시 플레이스홀더를 표시합니다. (로컬 파일 없을 때 대비)
+    const placeholderText = ad.title.replace(/ /g, '+');
+    
     return `
         <div onclick="showAdDetail('${ad.id}')"
             class="block bg-gray-100 border border-red-400 p-3 shadow-md hover:shadow-lg transition duration-200 ease-in-out rounded-none cursor-pointer active:scale-[0.98]">
             <div class="flex items-center space-x-3">
                 <img src="${ad.image}" 
-                    onerror="this.onerror=null;this.src='https://placehold.co/100x50/DC2626/ffffff?text=AD';" 
+                    onerror="this.onerror=null;this.src='https://placehold.co/100x50/DC2626/ffffff?text=AD+Fail';" 
                     alt="${ad.title} 광고" class="w-12 h-12 object-cover border border-red-300 rounded-none flex-shrink-0">
                 <div class="flex-grow">
                     <span class="text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 inline-block border border-red-200 rounded-none">광고</span>
@@ -345,6 +368,9 @@ function renderServers(servers) {
     adIndex = 0; // 광고 인덱스 초기화
 
     servers.forEach((server, index) => {
+        // 이미지 로드 실패 시 플레이스홀더를 표시합니다. (로컬 파일 없을 때 대비)
+        const placeholderText = server.title.replace(/ /g, '+');
+        
         // 서버 카드 HTML 생성
         const communityButtons = server.communities.map(comm => {
             const info = getCommunityInfo(comm.type);
@@ -378,7 +404,9 @@ function renderServers(servers) {
 
         const cardHtml = `
             <div class="server-card bg-white shadow-xl overflow-hidden transform hover:shadow-2xl transition duration-200 ease-in-out border border-gray-200 rounded-none">
-                <img src="${server.image}" onerror="this.onerror=null;this.src='https://placehold.co/400x112/B3B3B3/000000?text=${server.title.replace(/ /g, '+')}';" alt="${server.title} 이미지" class="w-full h-28 object-cover border-b border-gray-200">
+                <img src="${server.image}" 
+                     onerror="this.onerror=null;this.src='https://placehold.co/400x112/B3B3B3/000000?text=Image+Load+Fail:+${placeholderText}';" 
+                     alt="${server.title} 이미지" class="w-full h-28 object-cover border-b border-gray-200">
                 <div class="p-2 sm:p-3"> 
                     <div class="flex justify-between items-center mb-1">
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
@@ -451,6 +479,23 @@ function renderFilterButtons() {
     });
 }
 
+/** 검색 입력 필드의 값이 바뀔 때 호출됩니다. (index.html에서 onkeyup으로 연결) */
+function handleSearch(event) {
+    searchQuery = event.target.value;
+    applyFilters();
+}
+window.handleSearch = handleSearch;
+
+/** 필터링 상태를 초기화합니다. */
+function resetFilters() {
+    activeCategory = 'all';
+    activeTag = 'all';
+    document.getElementById('server-search-input').value = '';
+    searchQuery = '';
+    applyFilters();
+}
+window.resetFilters = resetFilters;
+
 /** 필터와 검색어에 따라 서버 목록을 필터링하고 렌더링합니다. */
 function applyFilters() {
     const search = searchQuery.toLowerCase().trim();
@@ -475,23 +520,6 @@ function applyFilters() {
 
     renderServers(filtered);
 }
-
-/** 검색 입력 필드의 값이 바뀔 때 호출됩니다. (index.html에서 onkeyup으로 연결) */
-function handleSearch(event) {
-    searchQuery = event.target.value;
-    applyFilters();
-}
-window.handleSearch = handleSearch;
-
-/** 필터링 상태를 초기화합니다. */
-function resetFilters() {
-    activeCategory = 'all';
-    activeTag = 'all';
-    document.getElementById('server-search-input').value = '';
-    searchQuery = '';
-    applyFilters();
-}
-window.resetFilters = resetFilters;
 
 /** 활성화된 필터 버튼의 스타일을 업데이트합니다. */
 function updateFilterButtonStyles(type, activeValue, selector) {
