@@ -10,16 +10,13 @@ const serverData = {
     siteConfig: {
         siteTitle: '마인크래프트 커뮤니티 서버 리스트',
         siteDescription: '최신 마인크래프트 커뮤니티 소식을 빠르게 확인하세요.(보드제작)',
-        topBannerTitle:'하반기 최고의 서버(광고)', // 최고의 서버 섹션 제목 (광고)
-        mainBannerTitle: '오늘의 추천 서버', // 오늘의 추천 서버 섹션 제목 (배너)
         filterTitleCategory: '서버 종류',
         filterTitleTag: '태그',
         noResultsMessage: '현재 선택하신 필터/검색어에 해당하는 서버가 없습니다.',
         resetButtonLabel: '초기화',
         
-        // 배너 슬라이드 전환 시간 설정을 분리했습니다.
-        topBannerRotationInterval: 4000, // 최고의 서버 (광고) 전환 시간 (밀리초, 4초)
-        mainBannerRotationInterval: 3000, // 추천 서버 (배너) 전환 시간 (밀리초, 3초)
+        // 배너 슬라이드 전환 시간 설정
+        bannerRotationInterval: 3500, // 슬라이드 전환 시간 (밀리초, 3.5초)
     },
 
     // B. 필터 종류 설정 (카테고리 및 태그)
@@ -30,31 +27,31 @@ const serverData = {
         tags: [ '인기', '신규', '이벤트', '개발 중' ]
     },
 
-    // C. 최고의 서버 (광고) 배너 데이터
-    topBanners: [
+    // C. 1. 광고 배너 데이터 (최고의 서버) - isAd: true
+    adBanners: [
         { id: 'top_001', title: '베드락 최대 규모 국가전쟁', subtitle: '지금 바로 접속하여 특별한 혜택을 받으세요!', 
           image: 'images/제목을-입력해주세요_-001(27).png', 
           url: 'https://open.kakao.com/o/gRUC0Reh', 
-          content: '베드락 최대규모 국가전쟁 서버입니다.' },
+          content: '베드락 최대규모 국가전쟁 서버입니다.', isAd: true, type: '광고' },
         { id: 'top_002', title: '🚀 프리미엄 서버 독점 공개!', subtitle: '특별한 혜택을 놓치지 마세요!', 
           image: 'images/banner_top_02.png', 
           url: 'https://example.com/top-server-ad-2', 
-          content: '새로운 서버가 최고의 서버 배너에 등록되었습니다! 론칭 이벤트 참여 기회를 잡으세요.' }
+          content: '새로운 서버가 최고의 서버 배너에 등록되었습니다! 론칭 이벤트 참여 기회를 잡으세요.', isAd: true, type: '광고' },
     ],
-
-    // D. 오늘의 추천 서버 (배너) 데이터
-    mainBanners: [
+    
+    // C. 2. 추천 배너 데이터 (오늘의 추천 서버) - isAd: false
+    recommendedBanners: [
         { id: 'main_001', title: '✨ 주간 인기 서버 랭킹 1위!', subtitle: '3초마다 자동으로 교체됩니다.', 
           image: 'images/banner_main_01.gif', 
           url: 'https://example.com/weekly-event', 
-          content: '주간 인기 서버 랭킹 1위! 상세 내용 확인 및 접속은 여기에서!' },
+          content: '주간 인기 서버 랭킹 1위! 상세 내용 확인 및 접속은 여기에서!', isAd: false, type: '추천' },
         { id: 'main_002', title: '🎁 신규 유저 특별 지원!', subtitle: '모던하고 각진 디자인으로 한눈에 서버 정보를 확인하세요.', 
           image: 'images/banner_main_02.png', 
           url: 'https://example.com/new-user-guide', 
-          content: '신규 유저를 위한 웰컴 패키지가 준비되어 있습니다. 지금 바로 확인하세요.' }
+          content: '신규 유저를 위한 웰컴 패키지가 준비되어 있습니다. 지금 바로 확인하세요.', isAd: false, type: '추천' }
     ],
 
-    // E. 실제 서버 목록 사이에 삽입되는 인라인 광고 데이터
+    // D. 실제 서버 목록 사이에 삽입되는 인라인 광고 데이터 (변경 없음)
     inlineAds: [
         { id: 'ad_001', title: '프리미엄 서버 호스팅! 20% 할인 이벤트!', 
           content: '렉 없는 환경을 원한다면 지금 바로 호스팅 서비스 확인하세요! 최고의 안정성과 속도를 보장합니다.', 
@@ -66,18 +63,18 @@ const serverData = {
           url: 'https://example.com/launcher-ad' }
     ],
 
-    // F. 실제 서버 목록 데이터 (가장 중요)
+    // E. 실제 서버 목록 데이터 (가장 중요, 인원수 유지)
     servers: [
-        { id: 'mc_001', title: '베드락 코어 국가전쟁', content: '베드락 최대 규모 국가전쟁 서버입니다. 새롭게 국가 시스템을 도입하여 플레이어 간의 경쟁을 극대화했습니다.', category: '국가전쟁', tags: ['인기', '신규'], memberCount: 270, // 인원수
+        { id: 'mc_001', title: '베드락 코어 국가전쟁', content: '베드락 최대 규모 국가전쟁 서버입니다. 새롭게 국가 시스템을 도입하여 플레이어 간의 경쟁을 극대화했습니다.', category: '국가전쟁', tags: ['인기', '신규'], memberCount: 270, 
           image: 'images/제목을-입력해주세요_-001(27).png', 
           communities: [{ type: 'Discord', url:'https://discord.gg/p77tCgSdqC' }, { type: 'Kakao', url: 'https://open.kakao.com/o/gRUC0Reh' }] },
-        { id: 'mc_002', title: '파이브의 베드락 평지생존', content: '파이브의 평지생존에서 신나게 즐겨보세요. 넓은 평지 맵에서 나만의 건축물을 짓고 생존하는 재미!', category: '평지생존', tags: ['이벤트'], memberCount: 190, // 인원수
+        { id: 'mc_002', title: '파이브의 베드락 평지생존', content: '파이브의 평지생존에서 신나게 즐겨보세요. 넓은 평지 맵에서 나만의 건축물을 짓고 생존하는 재미!', category: '평지생존', tags: ['이벤트'], memberCount: 190, 
           image: 'images/1759062239695.png', 
           communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/gWMaUZuh' }] },
-        { id: 'mc_003', title: '판타지 건축 프로젝트', content: '창의적인 건축가들을 위한 서버입니다. 정기적인 건축 대회를 통해 실력을 뽐내세요.', category: '건축/크리에이티브', tags: ['신규', '개발 중'], memberCount: 92, // 인원수
+        { id: 'mc_003', title: '판타지 건축 프로젝트', content: '창의적인 건축가들을 위한 서버입니다. 정기적인 건축 대회를 통해 실력을 뽐내세요.', category: '건축/크리에이티브', tags: ['신규', '개발 중'], memberCount: 92, 
           image: 'images/server_mc_003.png', 
           communities: [{ type: 'Discord', url: 'https://discord.gg/example-build' }, { type: 'Kakao', url: 'https://open.kakao.com/o/example-build-chat' }] },
-        { id: 'mc_004', title: '자유 소통 광장', content: '마인크래프트에 관련된 모든 주제로 자유롭게 소통하는 오픈 채팅방입니다. 부담없이 들어오세요! 매일 활발하게 채팅이 이어지고 있습니다.', category: '자유 주제', tags: ['신규'], memberCount: 220, // 인원수
+        { id: 'mc_004', title: '자유 소통 광장', content: '마인크래프트에 관련된 모든 주제로 자유롭게 소통하는 오픈 채팅방입니다. 부담없이 들어오세요! 매일 활발하게 채팅이 이어지고 있습니다.', category: '자유 주제', tags: ['신규'], memberCount: 220, 
           image: 'images/server_mc_004.png', 
           communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-free' }] },
     ]
@@ -90,8 +87,8 @@ const siteConfig = serverData.siteConfig;
 const serverList = document.getElementById('server-list');
 const noResults = document.getElementById('no-results');
 
-// 분리된 배너 컨테이너 참조
-const topBannerContainer = document.getElementById('top-banner-content');
+// 두 개의 독립된 배너 컨테이너 참조
+const adBannerContainer = document.getElementById('ad-banner-content');
 const mainBannerContainer = document.getElementById('main-banner-content');
 
 const adDetailModal = document.getElementById('ad-detail-modal');
@@ -102,11 +99,11 @@ let activeCategory = 'all';
 let activeTag = 'all';
 let searchQuery = '';
 
-// 분리된 슬라이더 상태 관리
-let currentTopBannerIndex = 0;
-let topBannerInterval = null;
-let currentMainBannerIndex = 0;
-let mainBannerInterval = null;
+// 개별 슬라이더 상태 관리
+let currentAdBannerIndex = 0;
+let currentRecBannerIndex = 0;
+let adBannerInterval = null;
+let recBannerInterval = null;
 
 
 // --- 3. 유틸리티 함수 ---
@@ -116,7 +113,7 @@ function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-/** 커뮤니티 타입에 따른 버튼 스타일과 아이콘을 반환합니다. (KakaoTalk/Message 스타일) */
+/** 커뮤니티 타입에 따른 버튼 스타일과 아이콘을 반환합니다. */
 function getCommunityInfo(type) {
     const icons = {
         message: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle text-primary-dark"><path d="M7.9 20A10.1 10.1 0 0 1 12 21c5.5 0 10-4.5 10-10C22 5.5 17.5 1 12 1S2 5.5 2 11c0 2.6 1 5 2.6 6.8L3 21z"/></svg>`,
@@ -143,10 +140,6 @@ function initializeTextContent() {
     document.getElementById('site-title-h1').textContent = siteConfig.siteTitle;
     document.getElementById('site-description-p').textContent = siteConfig.siteDescription;
     
-    // 분리된 배너 제목 설정
-    document.getElementById('top-banner-title-h2').textContent = siteConfig.topBannerTitle;
-    document.getElementById('main-banner-title-h2').textContent = siteConfig.mainBannerTitle;
-
     document.getElementById('filter-category-h3').textContent = siteConfig.filterTitleCategory;
     document.getElementById('filter-tag-h3').textContent = siteConfig.filterTitleTag;
 
@@ -179,15 +172,19 @@ function hideDrawer() {
 window.hideDrawer = hideDrawer; 
 
 
-// --- 5. 배너 및 광고 로직 (단일 슬라이드 구현) ---
+// --- 5. 배너 및 광고 로직 (개별 슬라이드 구현) ---
+
+/** 모든 배너와 인라인 광고를 포함한 데이터 소스를 가져옵니다. */
+function getAllBannerData() {
+    return [...serverData.adBanners, ...serverData.recommendedBanners, ...serverData.inlineAds];
+}
 
 function getAdDataById(id) {
-    // 모든 배너와 광고를 통합하여 검색
-    const combinedData = [...serverData.mainBanners, ...serverData.topBanners, ...serverData.inlineAds];
-    const item = combinedData.find(a => a.id === id);
+    const item = getAllBannerData().find(a => a.id === id);
     if (!item) return null;
 
-    const isTopBanner = serverData.topBanners.some(b => b.id === id);
+    // isAd 속성이 없으면 (inlineAds의 경우) 기본적으로 true로 간주
+    const isAd = item.isAd !== undefined ? item.isAd : true; 
     
     return { 
         id: item.id, 
@@ -195,7 +192,7 @@ function getAdDataById(id) {
         content: item.content || item.subtitle, 
         url: item.url, 
         image: item.image,
-        isTop: isTopBanner
+        isAd: isAd // 광고 여부
     };
 }
 
@@ -207,11 +204,11 @@ function showAdDetail(itemId) {
     document.getElementById('modal-ad-content').textContent = item.content;
     
     const adImage = document.getElementById('modal-ad-image');
-    // TopBanner는 어두운 파랑 (광고), MainBanner는 밝은 파랑 (추천) 계열로 구분
-    const placeholderColor = item.isTop ? '3D5ECF' : '5F82FF'; 
+    // 광고(isAd: true)는 어두운 파랑, 추천(isAd: false)은 밝은 파랑 계열로 구분
+    const placeholderColor = item.isAd ? '3D5ECF' : '5F82FF'; 
     
     adImage.src = item.image;
-    adImage.onerror = () => { adImage.src = `https://placehold.co/800x200/${placeholderColor}/ffffff?text=배너+이미지+로드+실패`; };
+    adImage.onerror = () => { adImage.src = `https://placehold.co/800x200/${placeholderColor}/ffffff?text=${item.isAd ? '광고' : '추천'}+이미지+로드+실패`; };
 
     document.getElementById('modal-ad-link').href = item.url;
     
@@ -230,8 +227,8 @@ function hideAdDetail() {
 }
 window.hideAdDetail = hideAdDetail; 
 
-/** 단일 슬라이드 트랙을 렌더링하고 DOM에 추가합니다. */
-function renderBanners(banners, containerElement, trackId, isTopBanner) {
+/** 개별 슬라이드 트랙을 렌더링하고 DOM에 추가합니다. */
+function renderBanners(banners, containerElement, trackId) {
     if (!banners || banners.length === 0) {
         containerElement.innerHTML = `<div class="p-4 text-center text-gray-500">등록된 배너가 없습니다.</div>`;
         return null;
@@ -246,20 +243,23 @@ function renderBanners(banners, containerElement, trackId, isTopBanner) {
 
     // Generate individual slides
     const slidesHtml = banners.map((banner) => {
-        const placeholderBg = isTopBanner ? '3D5ECF' : '5F82FF';
-        const titleSize = isTopBanner ? 'text-xl sm:text-2xl' : 'text-xl sm:text-3xl'; 
-        const subtitleSize = isTopBanner ? 'text-xs sm:text-sm' : 'text-sm sm:text-lg';
-        const contentBg = isTopBanner ? 'bg-primary-dark' : 'bg-primary'; 
-        const label = isTopBanner ? '광고' : '추천';
+        // isAd 값에 따라 색상과 텍스트를 동적으로 결정
+        const isAd = banner.isAd; 
+        // 광고는 어두운 색, 추천은 밝은 색 계열로 설정하여 시각적 분리
+        const placeholderBg = isAd ? '3D5ECF' : '5F82FF'; 
+        const titleSize = isAd ? 'text-lg sm:text-2xl' : 'text-xl sm:text-3xl'; // 광고는 살짝 작은 글씨
+        const subtitleSize = isAd ? 'text-xs sm:text-base' : 'text-sm sm:text-lg';
+        const contentBg = isAd ? 'bg-primary-dark' : 'bg-primary'; 
+        const label = isAd ? '광고' : '추천';
 
         return `
             <div onclick="showAdDetail('${banner.id}')" 
                  style="width: ${100 / banners.length}%;"
                  class="flex-shrink-0 block h-full relative cursor-pointer active:scale-[0.99]">
-                <!-- 배너 꽉 채움, 모서리 둥글게 처리 제거 -->
+                <!-- 배너 꽉 채움 -->
                 <img src="${banner.image}" 
                      onerror="this.onerror=null;this.src='https://placehold.co/1200x300/${placeholderBg}/ffffff?text=${label}+이미지+로드+실패';" 
-                     alt="${banner.title} 배너 이미지" 
+                     alt="${banner.title} ${label} 이미지" 
                      class="w-full h-full object-cover absolute inset-0">
                 <div class="absolute inset-0 ${contentBg} bg-opacity-70 flex flex-col justify-center items-center text-white p-2">
                     <p class="text-xs font-light mb-1 border px-2 py-0.5 rounded-full border-white/50">${label}</p>
@@ -277,53 +277,37 @@ function renderBanners(banners, containerElement, trackId, isTopBanner) {
     return track;
 }
 
-/** 개별 슬라이더 전환 로직 (각 배너 섹션에 대해 독립적으로 호출됨) */
-function startSliderRotation(banners, trackElement, intervalTime, isTopBanner) {
-    // 배너가 2개 미만이면 슬라이드 로직을 실행하지 않습니다.
+/** 슬라이더 전환 로직 (하나의 트랙만 이동) */
+function startSliderRotation(banners, trackElement, startIndex, indexRef, intervalTime, intervalRef) {
     if (!trackElement || banners.length < 2) return; 
 
     const totalBanners = banners.length;
     
-    let currentIndex;
-    let intervalId;
-
-    if (isTopBanner) {
-        currentIndex = currentTopBannerIndex;
-        intervalId = topBannerInterval;
-    } else {
-        currentIndex = currentMainBannerIndex;
-        intervalId = mainBannerInterval;
-    }
-
     // Clear any existing interval
-    if (intervalId) clearInterval(intervalId);
+    if (intervalRef.value) clearInterval(intervalRef.value);
+
+    // Initial index setup
+    indexRef.value = startIndex;
 
     // Set up the interval function
     const rotationFn = () => {
         // 인덱스를 순환
-        currentIndex = (currentIndex + 1) % totalBanners;
+        indexRef.value = (indexRef.value + 1) % totalBanners;
         
-        // 100% 기준으로 트랙을 이동시킵니다. (전체 슬라이드 효과)
-        const translateXValue = -(currentIndex * 100); 
+        // 100% 기준으로 트랙을 이동시킵니다.
+        const translateXValue = -(indexRef.value * 100); 
         trackElement.style.transform = `translateX(${translateXValue}%)`;
-        
-        // 전역 상태 업데이트
-        if (isTopBanner) {
-            currentTopBannerIndex = currentIndex;
-        } else {
-            currentMainBannerIndex = currentIndex;
-        }
     };
 
     // Start rotation
-    intervalId = setInterval(rotationFn, intervalTime);
-
-    if (isTopBanner) {
-        topBannerInterval = intervalId;
-    } else {
-        mainBannerInterval = intervalId;
-    }
+    intervalRef.value = setInterval(rotationFn, intervalTime);
 }
+
+// Helper object to pass indices and intervals by reference
+const adIndexRef = { value: 0 };
+const recIndexRef = { value: 0 };
+const adIntervalRef = { value: null };
+const recIntervalRef = { value: null };
 
 
 // --- 6. 서버 목록 렌더링 및 필터링 로직 (통이미지 카드 적용) ---
@@ -423,7 +407,7 @@ function renderServers(servers) {
                     <!-- 인원수 뱃지 (이미지 위에 오버레이) -->
                     <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm shadow-md rounded-lg p-2 flex items-center border border-gray-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-primary-dark mr-1"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        <!-- '인원수'로 텍스트 변경 -->
+                        <!-- '인원수' 텍스트 유지 -->
                         <span class="text-sm font-bold text-primary-dark">${formatNumber(server.memberCount)}명</span>
                     </div>
                 </div>
@@ -553,23 +537,21 @@ function updateFilterButtonStyles(type, activeValue, selector) {
 // --- 7. 애플리케이션 시작 (On Load) ---
 
 window.onload = function() {
-    console.log("SUCCESS: 마인리스트 네오 둥근모 UI 로드 완료. Full Width 및 컴팩트 카드 디자인 적용."); 
+    console.log("SUCCESS: 마인리스트 네오 둥근모 UI 로드 완료. 두 개의 독립된 슬라이더 적용."); 
     
     // 1. 텍스트 설정 초기화
     initializeTextContent();
 
-    // 2. Top Banner (광고) 슬라이드 설정 및 시작
-    const topBannerTrack = renderBanners(serverData.topBanners, topBannerContainer, 'top-banner-slider-track', true);
-    if (topBannerTrack) {
-        // 배너가 2개 이상일 경우에만 슬라이드 시작
-        startSliderRotation(serverData.topBanners, topBannerTrack, siteConfig.topBannerRotationInterval, true);
+    // 2. 광고 배너 슬라이드 설정 및 시작 (최고의 서버)
+    const adBannerTrack = renderBanners(serverData.adBanners, adBannerContainer, 'ad-banner-slider-track');
+    if (adBannerTrack && serverData.adBanners.length >= 2) {
+        startSliderRotation(serverData.adBanners, adBannerTrack, 0, adIndexRef, siteConfig.bannerRotationInterval, adIntervalRef);
     }
-
-    // 3. Main Banner (추천) 슬라이드 설정 및 시작
-    const mainBannerTrack = renderBanners(serverData.mainBanners, mainBannerContainer, 'main-banner-slider-track', false);
-    if (mainBannerTrack) {
-        // 배너가 2개 이상일 경우에만 슬라이드 시작
-        startSliderRotation(serverData.mainBanners, mainBannerTrack, siteConfig.mainBannerRotationInterval, false);
+    
+    // 3. 추천 배너 슬라이드 설정 및 시작 (오늘의 추천 서버)
+    const recBannerTrack = renderBanners(serverData.recommendedBanners, mainBannerContainer, 'rec-banner-slider-track');
+    if (recBannerTrack && serverData.recommendedBanners.length >= 2) {
+        startSliderRotation(serverData.recommendedBanners, recBannerTrack, 0, recIndexRef, siteConfig.bannerRotationInterval, recIntervalRef);
     }
     
     // 4. 필터 버튼 렌더링 및 이벤트 연결
