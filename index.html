@@ -92,7 +92,7 @@
                     },
                     borderRadius: {
                         'lg': '0.5rem', 
-                        'xl': '0.75rem' /* 기존 1rem -> 0.75rem으로 살짝 축소 */
+                        'xl': '0.75rem' 
                     }
                 }
             }
@@ -124,31 +124,31 @@
                    class="w-full p-4 border-2 border-gray-200 focus:border-primary focus:ring-primary transition rounded-xl text-gray-800 shadow-md">
         </div>
 
-        <!-- 1. 최고의 서버 배너 영역 (Top Banner - SLIDER): 꽉 채움 -->
-        <!-- 배경색 및 그림자로 구분을 명확히 함 -->
-        <div class="mb-4 shadow-inner overflow-hidden bg-primary-light border-y border-gray-200">
-            <div class="px-4 py-2 bg-primary text-white flex justify-between items-center">
-                <h2 id="top-banner-title-h2" class="text-md font-bold"></h2>
-                <span class="text-xs font-light opacity-90">광고</span>
+        <!-- 1. 광고 배너 섹션 (Top Banner - SLIDER) -->
+        <div class="mb-4 overflow-hidden bg-white shadow-md border-y border-gray-200">
+            <div class="px-4 py-3 bg-primary-dark text-white flex justify-between items-center">
+                <h2 class="text-lg font-bold">최고의 서버 (광고)</h2>
+                <span class="text-xs font-semibold">자동 슬라이드</span>
             </div>
-            <div id="top-banner-content" class="w-full h-24 sm:h-32 relative overflow-hidden flex items-center justify-center text-center">
-                <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">최고의 서버 로딩 중...</div>
+            <!-- #ad-banner-content : 광고 슬라이드 컨테이너 -->
+            <div id="ad-banner-content" class="w-full h-28 sm:h-36 relative overflow-hidden flex items-center justify-center text-center">
+                <div class="absolute inset-0 bg-primary-dark text-white flex items-center justify-center font-bold">광고 배너 로딩 중...</div>
             </div>
         </div>
-
-        <!-- 2. 오늘의 추천 서버 배너 영역 (Main Banner - SLIDER): 꽉 채움 -->
-        <div class="mb-6 overflow-hidden bg-white">
-             <div class="px-4 py-3 bg-primary-light text-gray-800 flex justify-between items-center">
-                <h2 id="main-banner-title-h2" class="text-lg font-bold"></h2>
+        
+        <!-- 2. 추천 서버 섹션 (Main Banner - SLIDER) -->
+        <div class="mb-6 overflow-hidden bg-white shadow-md border-y border-gray-200">
+            <div class="px-4 py-3 bg-primary-light text-gray-800 flex justify-between items-center">
+                <h2 class="text-lg font-bold">오늘의 추천 서버</h2>
                 <span class="text-xs font-semibold text-primary">자동 슬라이드</span>
             </div>
+            <!-- #main-banner-content : 추천 슬라이드 컨테이너 -->
             <div id="main-banner-content" class="w-full h-36 sm:h-44 relative overflow-hidden flex items-center justify-center text-center">
-                <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">배너 로딩 중...</div>
+                <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">추천 배너 로딩 중...</div>
             </div>
         </div>
         
         <!-- 서버 목록 영역 (통이미지 카드 Layout - 좌우 패딩만 유지) -->
-        <!-- 모바일에서는 1열, 태블릿 이상에서는 2열로 표시, 좌우 패딩을 줘서 카드 자체가 꽉 차게 만듦 -->
         <main id="server-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 pb-10"></main>
 
         <!-- 목록이 비어 있을 때 메시지 -->
@@ -214,8 +214,8 @@
         </div>
     </div>
 
-    <!-- ⚠️ list.js 버전 번호 변경: 20240929_7 (변경 시마다 수정) -->
-    <script src="./list.js?v=2024092_9"></script> 
+    <!-- ⚠️ list.js 버전 번호 변경: 20240929_9 (변경 시마다 수정) -->
+    <script src="./list.js?v=20240929_9"></script> 
 </body>
 </html>
 
