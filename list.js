@@ -70,9 +70,9 @@ const serverData = {
         { id: 'mc_001', title: '베드락 코어 국가전쟁', content: '베드락 최대 규모 국가전쟁 서버입니다.', category: '국가전쟁', tags: ['인기', '신규'], memberCount: 270, 
           image: 'images/제목을-입력해주세요_-001(27).png', // <--- 로컬 이미지 경로로 변경됨
           communities: [{ type: 'Discord', url:'https://discord.gg/p77tCgSdqC' }, { type: 'Kakao', url: 'https://open.kakao.com/o/gRUC0Reh' }] },
-        { id: 'mc_002', title: '미니게임즈 천국', content: '다양하고 신나는 PVP 미니게임들을 24시간 즐겨보세요! 가볍게 즐기기 최고!', category: '미니게임', tags: ['이벤트'], memberCount: 450, 
-          image: 'images/server_mc_002.jpg', // <--- 로컬 이미지 경로로 변경됨
-          communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-mini' }] },
+        { id: 'mc_002', title: '파이브의 베드락 평지생존', content: '파이브의 평지생존에서 신나게 즐겨보세요', category: '평지생존', tags: ['이벤트'], memberCount: 190, 
+          image: 'images/1759062239695.png', // <--- 로컬 이미지 경로로 변경됨
+          communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/gWMaUZuh' }] },
         { id: 'mc_003', title: '판타지 건축 프로젝트', content: '창의적인 건축가들을 위한 서버입니다. 각진 디자인에 맞게 모든 UI를 깔끔하게 정리했습니다.', category: '건축/크리에이티브', tags: ['신규', '개발 중'], memberCount: 92, 
           image: 'images/server_mc_003.png', // <--- 로컬 이미지 경로로 변경됨
           communities: [{ type: 'Discord', url: 'https://discord.gg/example-build' }, { type: 'Kakao', url: 'https://open.kakao.com/o/example-build-chat' }] },
