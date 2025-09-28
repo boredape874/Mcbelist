@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 페이지 제목은 list.js에서 동적으로 설정됩니다. -->
     <title id="page-title">Loading...</title> 
     
     <!-- Tailwind CSS CDN 로드 -->
@@ -11,19 +10,23 @@
 
     <!-- 
     ================================================================================
-    * 디자인 스타일 영역: 모든 CSS와 Tailwind 설정은 여기에 유지됩니다.
-    * 레이아웃의 각진 모던 UI 스타일을 정의합니다.
+    * 디자인 스타일 영역: Nanum Square Round (네오 둥근모 폰트) 적용
     ================================================================================
     -->
     <style>
-        /* 폰트 및 기본 스타일 */
-        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; }
-        
-        /* 각진 모던 UI를 위한 스타일 오버라이드 및 정의 */
-        #app > * { border-radius: 0 !important; }
-        .rounded-none { border-radius: 0 !important; }
+        /* Nanum Square Round 폰트 임포트 (네오 둥근모 폰트 적용) */
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round:wght@400;700;800&display=swap');
 
-        /* 햄버거 메뉴 버튼 고정 (Sticky Menu): 스크롤 시에도 따라다닙니다. */
+        /* 폰트 및 기본 스타일 */
+        body { 
+            font-family: 'Nanum Square Round', 'Inter', sans-serif; /* 네오 둥근모 폰트 적용 */
+            background-color: #f0f3f8; /* Toss/Kakao light background */ 
+        }
+        
+        /* 메인 컨테이너에 깔끔한 둥근 모서리 적용 */
+        #app { border-radius: 1rem; } /* rounded-xl */
+        
+        /* 햄버거 메뉴 버튼 고정 */
         #menu-btn {
             position: fixed;
             left: 1rem;
@@ -31,31 +34,27 @@
             z-index: 70; 
         }
 
-        /* 커뮤니티 버튼 스타일링 (list.js에서 클래스를 지정하여 사용합니다) */
+        /* 커뮤니티 버튼 스타일링 (카카오톡/친근한 아이콘 스타일) */
         .community-btn {
-            @apply inline-flex items-center justify-center px-2 py-0.5 border border-transparent text-xs font-medium shadow-sm transition duration-150 ease-in-out w-full rounded-none;
+            @apply flex items-center justify-center p-2 text-sm font-medium transition duration-150 ease-in-out border border-gray-300 rounded-lg hover:bg-gray-100;
         }
 
         /* 필터 버튼 기본 스타일 */
         .filter-btn-base {
-            @apply px-2 py-0.5 text-xs font-medium shadow-sm transition duration-150 whitespace-nowrap border rounded-none;
+            @apply px-3 py-1 text-xs font-medium shadow-sm transition duration-150 whitespace-nowrap border rounded-lg; /* 덜 둥근 모서리 유지 */
         }
         
-        /* 메인 배너 이미지 전환 효과 */
-        .banner-transition { transition: opacity 0.5s ease-in-out; }
-
-        /* 광고 상세 모달 스타일 */
-        .ad-modal {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 50;
+        /* 슬라이드 배너 트랙을 위한 CSS 설정 */
+        .slider-track {
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 부드러운 슬라이드 전환 효과 */
+            display: flex;
+            height: 100%;
         }
 
         /* 필터 드로어(사이드바) 스타일 */
         #filter-drawer {
-            width: 85%; /* 모바일에서 85% 너비 */
-            max-width: 300px; /* 최대 너비 제한 */
+            width: 85%; 
+            max-width: 320px; 
             transform: translateX(-100%);
             transition: transform 0.3s ease-in-out;
             z-index: 60; 
@@ -64,19 +63,25 @@
         #drawer-overlay {
             transition: opacity 0.3s ease-in-out;
             z-index: 59;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.4);
         }
     </style>
     
-    <!-- Tailwind Custom Configuration -->
+    <!-- Tailwind Custom Configuration (부드러운 블루 톤 유지) -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#1D4ED8', /* Blue 700 - 메인 색상 */
-                        'primary-dark': '#1E40AF', /* Blue 800 - 강조 색상 */
-                        'secondary': '#F59E0B', /* Amber 500 - 보조 강조색 */
+                        'primary': '#5F82FF',       /* Light Blue Accent (Toss Blue) */
+                        'primary-light': '#E8F0FF', /* Very light blue background */
+                        'primary-dark': '#3D5ECF',  /* Darker for hover/accents */
+                        'secondary': '#F59E0B',     /* 보조 강조색 */
+                        'reddit-vote': '#FF4500',   /* Reddit Upvote Orange (for member count) */
+                    },
+                    borderRadius: {
+                        'lg': '0.5rem', 
+                        'xl': '1rem' /* 큰 카드에 적용, 덜 둥근 느낌 */
                     }
                 }
             }
@@ -85,76 +90,91 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- 메인 컨테이너 -->
-    <div id="app" class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white shadow-xl min-h-screen">
+    <!-- 메인 컨테이너 (깔끔한 Toss 스타일의 카드 컨테이너) -->
+    <div id="app" class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-white shadow-2xl min-h-screen rounded-xl">
 
         <!-- 헤더 및 제목 -->
         <header class="text-center mb-6 relative pt-12 sm:pt-16"> 
             
             <!-- 왼쪽 상단 햄버거 메뉴 버튼 (고정/Fixed) -->
             <button onclick="toggleDrawer()" id="menu-btn" 
-                class="p-2 bg-white text-primary hover:text-primary-dark transition shadow-lg border border-gray-200 rounded-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                class="p-3 bg-white text-primary hover:text-primary-dark transition shadow-lg border border-gray-200 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
             </button>
             
-            <h1 id="site-title-h1" class="text-3xl font-extrabold text-primary-dark tracking-tight sm:text-4xl">Loading...</h1>
+            <h1 id="site-title-h1" class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">Loading...</h1>
             <p id="site-description-p" class="mt-2 text-md text-gray-500">Loading...</p>
-            <div class="h-0.5 w-16 bg-primary mx-auto mt-4"></div>
         </header>
 
-        <!-- 서버 검색 입력 필드 -->
+        <!-- 서버 검색 입력 필드 (Toss 스타일, 깔끔한 인풋) -->
         <div class="mb-6">
             <input type="text" id="server-search-input" onkeyup="handleSearch(event)"
                    placeholder="서버 이름, 내용, 카테고리, 태그 등으로 검색..."
-                   class="w-full p-3 border-2 border-primary focus:border-primary-dark focus:ring-primary-dark transition rounded-none text-gray-800 shadow-md">
+                   class="w-full p-4 border-2 border-gray-200 focus:border-primary focus:ring-primary transition rounded-xl text-gray-800 shadow-md">
         </div>
 
-        <!-- 최고의 서버 배너 영역 -->
-        <div class="mb-4 shadow-xl overflow-hidden bg-gray-100 border border-primary-dark">
-            <div id="top-banner-content" class="w-full h-24 sm:h-32 relative overflow-hidden flex items-center justify-center text-center">
-                <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">최고의 서버 로딩 중...</div>
-            </div>
-            <div class="p-2 bg-primary text-white border-t border-primary-dark">
+        <!-- 최고의 서버 배너 영역 (Top Banner - SLIDER) -->
+        <div class="mb-6 shadow-xl overflow-hidden bg-primary-light border border-gray-200 rounded-xl">
+            <div class="p-4 bg-primary text-white rounded-t-xl flex justify-between items-center">
                 <h2 id="top-banner-title-h2" class="text-md font-bold text-center"></h2>
+                <span class="text-xs font-light opacity-90">Ads</span>
+            </div>
+            <div id="top-banner-content" class="w-full h-24 sm:h-32 relative overflow-hidden flex items-center justify-center text-center rounded-b-xl">
+                <!-- Banner track will be inserted here by list.js -->
+                <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">최고의 서버 로딩 중...</div>
             </div>
         </div>
 
-        <!-- 오늘의 추천 서버 배너 영역 -->
-        <div class="mb-6 shadow-xl overflow-hidden bg-gray-100 border border-gray-300">
-            <div id="main-banner-content" class="w-full h-40 sm:h-48 relative overflow-hidden flex items-center justify-center text-center">
-                <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">배너 로딩 중...</div>
+        <!-- 오늘의 추천 서버 배너 영역 (Main Banner - SLIDER) -->
+        <div class="mb-8 shadow-2xl overflow-hidden bg-white border border-gray-100 rounded-xl">
+             <div class="p-4 bg-primary-light text-gray-800 rounded-t-xl flex justify-between items-center">
+                <h2 id="main-banner-title-h2" class="text-lg font-bold"></h2>
+                <span class="text-xs font-semibold text-primary">자동 슬라이드</span>
             </div>
-            <div class="p-3 sm:p-4 bg-gray-200 border-t border-gray-300">
-                <h2 id="main-banner-title-h2" class="text-lg font-bold text-gray-700"></h2>
+            <div id="main-banner-content" class="w-full h-40 sm:h-48 relative overflow-hidden flex items-center justify-center text-center rounded-b-xl">
+                <!-- Banner track will be inserted here by list.js -->
+                <div class="absolute inset-0 bg-primary-light text-primary-dark flex items-center justify-center font-bold">배너 로딩 중...</div>
             </div>
         </div>
         
-        <!-- 서버 목록 영역 -->
-        <main id="server-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-10"></main>
+        <!-- 서버 목록 영역 (Reddit Feed Layout) -->
+        <main id="server-list" class="grid grid-cols-1 gap-6 pb-10"></main>
 
         <!-- 목록이 비어 있을 때 메시지 -->
-        <div id="no-results" class="hidden text-center py-10 bg-gray-100 border border-gray-300 shadow-md rounded-none">
-            <p id="no-results-message" class="text-xl text-gray-500"></p>
-            <button onclick="resetFilters()" id="reset-button" class="mt-4 px-4 py-2 bg-primary text-white shadow-lg hover:bg-primary-dark transition rounded-none"></button>
+        <div id="no-results" class="hidden text-center py-12 bg-gray-50 border border-gray-200 shadow-lg rounded-xl">
+            <p id="no-results-message" class="text-xl text-primary-dark font-semibold"></p>
+            <button onclick="resetFilters()" id="reset-button" class="mt-6 px-6 py-2 bg-primary text-white shadow-xl hover:bg-primary-dark transition rounded-lg font-bold"></button>
         </div>
+        
+        <!-- (광고 및 배너 문의 버튼은 이제 드로어 내부로 이동했습니다.) -->
 
     </div>
 
     <!-- 필터 드로어 (Filter Drawer) - 왼쪽 상단 메뉴 -->
-    <div id="filter-drawer" class="fixed top-0 left-0 h-full bg-white shadow-2xl border-r-4 border-primary p-4 overflow-y-auto">
-        <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-300">
-            <h3 class="text-lg font-bold text-primary-dark">서버 필터링</h3>
-            <button onclick="hideDrawer()" class="p-1 text-gray-700 hover:text-red-500 transition">
+    <div id="filter-drawer" class="fixed top-0 left-0 h-full bg-white shadow-2xl border-r-4 border-primary p-6 overflow-y-auto rounded-r-lg">
+        <div class="flex justify-between items-center pb-4 mb-4 border-b border-gray-200">
+            <h3 class="text-xl font-bold text-primary-dark">필터 메뉴</h3>
+            <button onclick="hideDrawer()" class="p-1 text-gray-500 hover:text-red-500 transition rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         </div>
         <div id="drawer-filter-content">
-            <h3 id="filter-category-h3" class="text-sm font-bold mb-2 text-gray-800 border-b border-gray-200 pb-2"></h3>
-            <div id="category-filter" class="flex flex-wrap gap-2 mb-4 pt-2"></div>
-            <h3 id="filter-tag-h3" class="text-sm font-bold mb-2 text-gray-800 border-b border-gray-200 pb-2"></h3>
-            <div id="tag-filter" class="flex flex-wrap gap-2 pt-2"></div>
-            <button onclick="resetFilters(); hideDrawer();" class="mt-6 w-full px-3 py-2 bg-gray-700 text-white shadow-lg hover:bg-gray-800 transition rounded-none text-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw inline mr-1"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-3.35 1.76L4.5 9"/><path d="M3 12H1"/><path d="M22 12H23"/></svg>
+            <h3 id="filter-category-h3" class="text-sm font-bold mb-3 text-gray-800"></h3>
+            <div id="category-filter" class="flex flex-wrap gap-2 mb-6"></div>
+            <h3 id="filter-tag-h3" class="text-sm font-bold mb-3 text-gray-800"></h3>
+            <div id="tag-filter" class="flex flex-wrap gap-2 mb-8"></div>
+            
+            <!-- ✅ 요청하신 광고 및 배너 문의 버튼 (드로어 맨 아래 추가) -->
+            <div class="mb-6 border-t pt-4 border-gray-100">
+                <a href="https://open.kakao.com/me/Godbored" target="_blank"
+                   class="flex items-center justify-center w-full py-3 bg-secondary text-white font-bold text-sm rounded-lg shadow-md hover:bg-secondary/80 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-text mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M10 7H9"/><path d="M15 7H13"/><path d="M15 11H9"/></svg>
+                    광고 및 배너 문의 (카카오톡)
+                </a>
+            </div>
+            
+            <button onclick="resetFilters(); hideDrawer();" class="mt-4 w-full px-4 py-3 bg-primary text-white shadow-lg hover:bg-primary-dark transition rounded-lg text-base font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw inline mr-1"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-3.35 1.76L4.5 9"/><path d="M3 12H1"/><path d="M22 12H23"/></svg>
                 필터 초기화 및 닫기
             </button>
         </div>
@@ -163,33 +183,30 @@
     <!-- 드로어 오버레이 (클릭 시 닫기) -->
     <div id="drawer-overlay" onclick="hideDrawer()" class="fixed inset-0 opacity-0 hidden"></div>
 
-    <!-- 광고 상세 모달 -->
-    <div id="ad-detail-modal" class="ad-modal fixed inset-0 hidden items-center justify-center p-4">
-        <div class="bg-white max-w-lg w-full shadow-2xl border-4 border-primary rounded-none">
-            <div class="flex justify-between items-center p-4 border-b-4 border-primary bg-primary text-white">
+    <!-- 광고 상세 모달 (Toss/Clean Modal Style) -->
+    <div id="ad-detail-modal" class="ad-modal fixed inset-0 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white max-w-lg w-full shadow-2xl border-4 border-primary rounded-xl">
+            <div class="flex justify-between items-center p-4 border-b-2 border-primary-light bg-primary text-white rounded-t-xl">
                 <h2 id="modal-ad-title" class="text-xl font-bold"></h2>
                 <button onclick="hideAdDetail()" class="text-white hover:text-gray-200 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
             </div>
             <div class="p-4 sm:p-6 text-center">
-                <img id="modal-ad-image" alt="광고 이미지" class="w-full h-auto object-cover border border-gray-300 mb-4 rounded-none">
+                <img id="modal-ad-image" alt="광고 이미지" class="w-full h-auto object-cover border border-gray-300 mb-4 rounded-lg">
                 <p id="modal-ad-content" class="text-base text-gray-700 mb-6"></p>
-                <a id="modal-ad-link" target="_blank" class="block w-full py-2 bg-primary text-white font-bold hover:bg-primary-dark transition rounded-none mb-3">
+                <a id="modal-ad-link" target="_blank" class="block w-full py-3 bg-primary text-white font-bold hover:bg-primary-dark transition rounded-lg mb-3 shadow-md">
                     광고 바로가기 (외부 링크)
                 </a>
-                <button onclick="hideAdDetail()" class="w-full py-2 bg-gray-200 text-gray-800 font-bold hover:bg-gray-300 transition rounded-none">
+                <button onclick="hideAdDetail()" class="w-full py-3 bg-gray-200 text-gray-800 font-bold hover:bg-gray-300 transition rounded-lg">
                     닫기
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- 모든 로직과 데이터를 담고 있는 list.js 파일을 로드합니다. 
-         ⚠️ 캐시 버스팅을 위해 ?v= 뒤에 새로운 값을 추가했습니다. 
-         list.js가 수정될 때마다 이 값을 변경하면 브라우저가 새 파일로 인식합니다. ⚠️
-    -->
-    <script src="./list.js?v=20240928_5"></script> 
+    <!-- ⚠️ list.js가 수정될 때마다 아래 'v=' 뒤의 값을 변경해야 합니다. 버전 번호 변경: 20240929_3 -->
+    <script src="./list.js?v=20240929_1"></script> 
 </body>
 </html>
 
