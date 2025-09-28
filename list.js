@@ -10,30 +10,30 @@ const serverData = {
     // A. 사이트 전체 설정 (텍스트, 타이틀, 속도 등)
     siteConfig: {
         siteTitle: '마인크래프트 커뮤니티 서버 리스트',
-        siteDescription: '최신 마인크래프트 커뮤니티 소식을 빠르게 확인하세요.',
-        topBannerTitle: '🏆 최고의 서버 배너', // NEW: 최고의 서버 섹션 제목
-        mainBannerTitle: '오늘의 추천 서버', // 오늘의 추천 서버 섹션 제목
-        filterTitleCategory: '서버 종류별 분류',
-        filterTitleTag: '핵심 태그별 분류',
+        siteDescription: '최신 마인크래프트 커뮤니티 소식을 빠르게 확인하세요.(보드제작)',
+        topBannerTitle:'하반기 최고의 서버(배너)', // NEW: 최고의 서버 섹션 제목
+        mainBannerTitle: '추천 서버', // 오늘의 추천 서버 섹션 제목
+        filterTitleCategory: '서버 종류',
+        filterTitleTag: '태그',
         noResultsMessage: '현재 선택하신 필터/검색어에 해당하는 서버가 없습니다.',
-        resetButtonLabel: '필터 초기화',
-        mainBannerRotationInterval: 4000, // 배너 전환 시간 (밀리초, 1000ms = 1초)
+        resetButtonLabel: '초기화',
+        mainBannerRotationInterval: 3000, // 배너 전환 시간 (밀리초, 1000ms = 1초)
     },
 
     // B. 필터 종류 설정 (카테고리 및 태그)
     config: {
         // 서버 카테고리(서버 종류)를 추가/삭제/수정할 수 있습니다.
-        categories: [ '야생/RPG', '미니게임', '건축/크리에이티브', '자유 주제' ],
+        categories: [ '평지생존', '국가전쟁', '야생/RPG', '미니게임', '건축/크리에이티브', '자유 주제' ],
         // 태그를 추가/삭제/수정할 수 있습니다.
         tags: [ '인기', '신규', '이벤트', '개발 중' ]
     },
 
     // C. 최고의 서버 배너 데이터 (최상단 고정/순환 배너)
     topBanners: [
-        { id: 'top_001', title: '💎 최고의 서버 랭킹 1위! (클릭 가능)', subtitle: '지금 바로 접속하여 특별한 혜택을 받으세요!', 
+        { id: 'top_001', title: '베드락 최대 규모 국가전쟁', subtitle: '지금 바로 접속하여 특별한 혜택을 받으세요!', 
           image: 'images/제목을-입력해주세요_-001(27).png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://open.kakao.com/o/gRUC0Reh', 
-          content: '최고의 서버 랭킹 1위! 가장 많은 유저가 찾는 서버입니다. 상세 광고를 보려면 클릭하세요.' },
+          content: '베드락 최대규모 국가전쟁 서버입니다.' },
         { id: 'top_002', title: '🚀 프리미엄 서버 독점 공개!', subtitle: '특별한 혜택을 놓치지 마세요!', 
           image: 'images/banner_top_02.png', // <--- 로컬 이미지 경로로 변경됨
           url: 'https://example.com/top-server-ad-2', 
@@ -67,9 +67,9 @@ const serverData = {
     // F. 실제 서버 목록 데이터 (가장 중요)
     // 각 서버의 정보를 수정/추가/삭제할 수 있습니다.
     servers: [
-        { id: 'mc_001', title: '전설의 마인크래프트 왕국', content: 'GIF 지원 확인! 오래된 역사와 안정적인 운영을 자랑하는 대규모 야생 서버입니다.', category: '야생/RPG', tags: ['인기', '신규'], memberCount: 1500, 
-          image: 'images/server_mc_001.jpg', // <--- 로컬 이미지 경로로 변경됨
-          communities: [{ type: 'Discord', url: 'https://discord.gg/example-legend' }, { type: 'Web', url: 'http://legend.server.com' }] },
+        { id: 'mc_001', title: '베드락 코어 국가전쟁', content: '베드락 최대 규모 국가전쟁 서버입니다.', category: '국가전쟁', tags: ['인기', '신규'], memberCount: 270, 
+          image: 'images/제목을-입력해주세요_-001(27).png', // <--- 로컬 이미지 경로로 변경됨
+          communities: [{ type: 'Discord', url:'https://discord.gg/p77tCgSdqC' }, { type: 'Kakao', url: 'https://open.kakao.com/o/gRUC0Reh' }] },
         { id: 'mc_002', title: '미니게임즈 천국', content: '다양하고 신나는 PVP 미니게임들을 24시간 즐겨보세요! 가볍게 즐기기 최고!', category: '미니게임', tags: ['이벤트'], memberCount: 450, 
           image: 'images/server_mc_002.jpg', // <--- 로컬 이미지 경로로 변경됨
           communities: [{ type: 'Kakao', url: 'https://open.kakao.com/o/example-mini' }] },
